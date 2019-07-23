@@ -1,6 +1,7 @@
 defmodule Netguru.Schema.Author do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Netguru.Schema
 
   @fields [:first_name, :last_name, :age]
 
@@ -8,6 +9,8 @@ defmodule Netguru.Schema.Author do
     field :age, :integer
     field :first_name, :string
     field :last_name, :string
+
+    has_many :articles, Schema.Article
 
     timestamps()
   end
