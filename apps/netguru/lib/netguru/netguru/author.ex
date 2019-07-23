@@ -2,6 +2,7 @@ defmodule Netguru.Author do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @fields [:first_name, :last_name, :age]
 
   schema "authors" do
     field :age, :integer
@@ -11,10 +12,10 @@ defmodule Netguru.Author do
     timestamps()
   end
 
-  @doc false
   def changeset(author, attrs) do
     author
-    |> cast(attrs, [:first_name, :last_name, :age])
-    |> validate_required([:first_name, :last_name, :age])
+    |> cast(attrs, @fields)
+    |> validate_required(@fields)
+    |> validate_number(:age, greater_than_or_equal_to: 13)
   end
 end
