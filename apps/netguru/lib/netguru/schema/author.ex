@@ -1,4 +1,4 @@
-defmodule Netguru.Author do
+defmodule Netguru.Schema.Author do
   use Ecto.Schema
   import Ecto.Changeset
 
