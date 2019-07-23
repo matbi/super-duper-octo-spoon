@@ -27,6 +27,7 @@ defmodule Netguru.DataCase do
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Netguru.Repo)
+    Code.eval_file "priv/repo/seeds.exs"
 
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Netguru.Repo, {:shared, self()})
