@@ -3,6 +3,8 @@ defmodule Netguru.Schema.Article do
   import Ecto.Changeset
   alias Netguru.Schema
 
+  @all_fields [:title, :description, :body, :published_date]
+  @required_fields @all_fields -- [:description]
 
   schema "articles" do
     field :body, :string
@@ -15,10 +17,10 @@ defmodule Netguru.Schema.Article do
     timestamps()
   end
 
-  @doc false
   def changeset(article, attrs) do
     article
-    |> cast(attrs, [:title, :description, :body, :published_date])
-    |> validate_required([:title, :description, :body, :published_date])
+    |> cast(attrs, @all_fields)
+    |> validate_required(@required_fields)
+    |> validate_length(:title, max: 150)
   end
 end
