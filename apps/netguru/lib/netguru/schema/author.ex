@@ -3,7 +3,8 @@ defmodule Netguru.Schema.Author do
   import Ecto.Changeset
   alias Netguru.Schema
 
-  @fields [:first_name, :last_name, :age]
+  @all_fields [:first_name, :last_name, :age]
+  @required_fields @all_fields
 
   schema "authors" do
     field :age, :integer
@@ -17,8 +18,10 @@ defmodule Netguru.Schema.Author do
 
   def changeset(author, attrs) do
     author
-    |> cast(attrs, @fields)
-    |> validate_required(@fields)
+    |> cast(attrs, @all_fields)
+    |> validate_required(@required_fields)
     |> validate_number(:age, greater_than_or_equal_to: 13)
   end
+
+  def all_fields, do: @all_fields
 end

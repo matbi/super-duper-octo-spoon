@@ -6,7 +6,7 @@ defmodule Netguru.Schema.ArticleTest do
         valid_article = 
             Article
                 |> Repo.get!(1)
-                |> Map.take([:body, :title, :id, :description, :published_date, :author_id])
+                |> Map.take(Article.all_fields)
 
         {:ok, valid_article: valid_article}
     end

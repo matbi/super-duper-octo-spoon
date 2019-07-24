@@ -23,4 +23,6 @@ defmodule Netguru.Schema.Article do
     |> validate_required(@required_fields)
     |> validate_length(:title, max: 150)
   end
+
+  def all_fields, do: @all_fields
 end
