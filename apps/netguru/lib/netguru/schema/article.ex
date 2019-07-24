@@ -3,7 +3,7 @@ defmodule Netguru.Schema.Article do
   import Ecto.Changeset
   alias Netguru.Schema
 
-  @all_fields [:title, :description, :body, :published_date]
+  @all_fields [:title, :description, :body, :published_date, :author_id]
   @required_fields @all_fields -- [:description]
 
   schema "articles" do

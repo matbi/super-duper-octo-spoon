@@ -72,6 +72,13 @@ defmodule Netguru.Schema.ArticleTest do
         end
     end
 
+    test "author_id is required", %{ valid_article: article } do
+        changeset = changeset_merge(article, %{ author_id: "" })
+
+        refute changeset.valid?
+        assert Dict.has_key? changeset.errors, :author_id
+    end
+
     defp changeset_merge(article, params) do
         Article.changeset(%Article{}, Map.merge(article, params))
     end
