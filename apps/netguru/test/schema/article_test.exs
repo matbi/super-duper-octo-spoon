@@ -21,14 +21,14 @@ defmodule Netguru.Schema.ArticleTest do
         changeset = changeset_merge(article, %{body: ""})
         
         refute changeset.valid?
-        assert Dict.has_key? changeset.errors, :body
+        assert Keyword.has_key? changeset.errors, :body
     end
 
     test "published_date is required", %{ valid_article: article } do
         changeset = changeset_merge(article, %{published_date: ""})
 
         refute changeset.valid?
-        assert Dict.has_key? changeset.errors, :published_date
+        assert Keyword.has_key? changeset.errors, :published_date
     end
 
     test "description isn't required", %{ valid_article: article } do
@@ -42,7 +42,7 @@ defmodule Netguru.Schema.ArticleTest do
             changeset = changeset_merge(article, %{title: ""})
     
             refute changeset.valid?
-            assert Dict.has_key? changeset.errors, :title
+            assert Keyword.has_key? changeset.errors, :title
         end
 
         test "length cannot exceed 150 characters", %{ valid_article: article } do
@@ -52,7 +52,7 @@ defmodule Netguru.Schema.ArticleTest do
             changeset = changeset_merge(article, %{title: title})
 
             refute changeset.valid?
-            assert Dict.has_key? changeset.errors, :title
+            assert Keyword.has_key? changeset.errors, :title
         end
 
         test "is valid when the length doesn't exceed 150 characters", %{ valid_article: article } do
@@ -76,7 +76,7 @@ defmodule Netguru.Schema.ArticleTest do
         changeset = changeset_merge(article, %{ author_id: "" })
 
         refute changeset.valid?
-        assert Dict.has_key? changeset.errors, :author_id
+        assert Keyword.has_key? changeset.errors, :author_id
     end
 
     defp changeset_merge(article, params) do
