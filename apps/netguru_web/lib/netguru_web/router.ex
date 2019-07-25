@@ -17,6 +17,7 @@ defmodule NetguruWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     resources "/articles", ArticleController, only: [:delete]
+    resources "/authors", AuthorController, only: [:show]
   end
 
   # Other scopes may use custom stacks.

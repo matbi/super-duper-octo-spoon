@@ -1,7 +1,7 @@
 defmodule NetguruWeb.ArticleControllerTest do
     use NetguruWeb.ConnCase
   
-    describe "delete" do
+    describe "delete/2" do
         test "should return 404 when the article not found", %{conn: conn} do
             assert_error_sent :not_found, fn ->
                 delete conn, article_path(conn, :delete, 2)
