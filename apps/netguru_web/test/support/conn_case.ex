@@ -32,6 +32,7 @@ defmodule NetguruWeb.ConnCase do
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Netguru.Repo, {:shared, self()})
     end
+    Netguru.Seeds.main
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
