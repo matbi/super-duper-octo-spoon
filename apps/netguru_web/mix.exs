@@ -45,7 +45,8 @@ defmodule NetguruWeb.Mixfile do
       {:gettext, "~> 0.11"},
       {:netguru, in_umbrella: true},
       {:cowboy, "~> 1.0"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:json, "~> 1.2"}
     ]
   end
 
