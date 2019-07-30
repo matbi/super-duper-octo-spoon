@@ -7,10 +7,15 @@ defmodule NetguruWeb.ArticleController do
     action_fallback NetguruWeb.FallbackController
 
     def delete(conn, %{"id" => id}) do
+        user = Guardian.Plug.current_resource(conn)
         article = API.get_article! id
 
-        with {:ok, %Article{}} <- API.delete_article article do
-            send_resp(conn, :no_content, "")
+        if user.id == article.author_id do
+            with {:ok, %Article{}} <- API.delete_article article do
+                send_resp(conn, :no_content, "")
+            end
+        else
+            {:error, :unauthorized}
         end
     end
 

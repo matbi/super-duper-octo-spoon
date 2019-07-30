@@ -12,6 +12,19 @@ defmodule NetguruWeb.ArticleControllerTest do
             conn = delete conn, article_path(conn, :delete, 1)
             assert response(conn, 204)
         end
+
+        test "shouldn't be accessible for a user that is not the author" do
+            author = %{
+                "age" => 13,
+                "first_name" => "Test",
+                "last_name" => "Test2"
+            }
+            {:ok, %Netguru.Schema.Author{} = author} = Netguru.API.Author.create_author(author)
+            conn = login(author.id)
+            conn = delete conn, article_path(conn, :delete, 1)
+
+            assert conn.status == 401
+        end
     end
 
     describe "create/2" do
