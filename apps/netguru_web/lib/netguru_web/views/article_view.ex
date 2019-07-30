@@ -5,7 +5,7 @@ defmodule NetguruWeb.ArticleView do
         %{
             id: article.id,
             body: article.body,
-            description: article[:description],
+            description: article.description,
             published_date: article.published_date,
             title: article.title,
         }
