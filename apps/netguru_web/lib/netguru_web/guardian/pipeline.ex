@@ -1,5 +1,5 @@
 defmodule NetguruWeb.Guardian.Pipeline do
-    use Guardian.Plug.Pipeline, otp_app: :netguru_web, module: NetguruWeb.Guardian.Serializer, error_handler: NetguruWeb.Guardian.ErrorHandler
+    use Guardian.Plug.Pipeline, otp_app: :netguru_web, module: NetguruWeb.Guardian, error_handler: NetguruWeb.Guardian.ErrorHandler
 
     @claims %{iss: "NetguruWeb"}
 

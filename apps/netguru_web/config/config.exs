@@ -26,6 +26,16 @@ config :logger, :console,
 config :netguru_web, :generators,
   context_app: :netguru
 
+config :netguru_web, NetguruWeb.Guardian,
+  allowed_algos: ["HS512"], # optional
+  #verify_module: Guardian.JWT,  # optional
+  issuer: "NetguruWeb",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: "ednkXywWll1d2svDEpbA39R5kfkc9l96j0+u7A8MgKM+pbwbeDsuYB8MP2WUW1hf", # Insert previously generated secret key!
+  serializer: NetguruWeb.Guardian.Serializer
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

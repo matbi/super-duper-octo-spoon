@@ -33,7 +33,13 @@ defmodule NetguruWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Netguru.Repo, {:shared, self()})
     end
     Netguru.Seeds.main
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+
+    {:ok, token, _} = 1
+                        |> Netguru.API.Author.get_author!()
+                        |> NetguruWeb.Guardian.encode_and_sign()
+
+    conn = Phoenix.ConnTest.build_conn() |> Plug.Conn.put_req_header("authorization", "bearer: " <> token)
+    {:ok, conn: conn}
   end
 
 end

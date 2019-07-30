@@ -13,8 +13,12 @@ defmodule NetguruWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug NetguruWeb.Guardian.Pipeline
+  end
+
   scope "/", NetguruWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :authenticated] # Use the default browser stack
 
     resources "/articles", ArticleController, only: [:delete, :create]
     resources "/authors", AuthorController, only: [:show]
