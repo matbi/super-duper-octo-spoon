@@ -19,4 +19,12 @@ defmodule NetguruWeb.AuthorController do
                 |> json(%{"token" => token})
         end
     end
+
+    def update(conn, %{"id" => id, "author" => updated_author}) do
+        # raises for 404
+        author = API.get_author! id
+        with {:ok, %Author{} = author} <- API.update_author(id, updated_author) do
+            render conn, "show.json", author: author
+        end
+    end
 end

@@ -9,4 +9,11 @@ defmodule Netguru.API.Author do
             |> Author.changeset(author)
             |> Repo.insert
     end
+
+    def update_author(id, %{} = author) do
+        Author
+            |> Repo.get(id)
+            |> Author.changeset(author)
+            |> Repo.update
+    end
 end
