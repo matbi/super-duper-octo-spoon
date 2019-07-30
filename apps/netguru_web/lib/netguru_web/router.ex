@@ -24,6 +24,12 @@ defmodule NetguruWeb.Router do
     resources "/authors", AuthorController, only: [:show]
   end
 
+  scope "/", NetguruWeb do
+    pipe_through :browser
+
+    resources "/authors", AuthorController, only: [:create]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", NetguruWeb do
   #   pipe_through :api
