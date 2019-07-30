@@ -20,7 +20,7 @@ defmodule NetguruWeb.Router do
   scope "/", NetguruWeb do
     pipe_through [:browser, :authenticated] # Use the default browser stack
 
-    resources "/articles", ArticleController, only: [:delete, :create]
+    resources "/articles", ArticleController, only: [:delete, :create, :index]
     resources "/authors", AuthorController, only: [:show, :update]
   end
 

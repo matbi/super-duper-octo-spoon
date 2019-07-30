@@ -59,5 +59,35 @@ defmodule NetguruWeb.ArticleControllerTest do
             }} = response
         end
     end
+
+    describe "index/2" do
+        test "shouldn't be accessible for an unauthenticated user" do
+            conn = build_conn()
+            conn = get conn, article_path(conn, :index)
+
+            assert conn.status == 401
+        end
+
+        test "should return a list of articles", %{conn: conn} do
+            conn = get conn, article_path(conn, :index)
+
+            %{"articles" => articles} = json_response(conn, 200)
+            assert length(articles) == 1
+        end
+
+        test "should preload the author", %{conn: conn} do
+            conn = get conn, article_path(conn, :index)
+            %{"articles" => articles} = json_response(conn, 200)
+
+            author = Netguru.API.Author.get_author!(1)
+            author = "show.json"
+                        |> NetguruWeb.AuthorView.render(%{author: author})
+                        |> Map.new(fn {key, value} -> {to_string(key), value} end)
+
+            assert %{
+                "author" => ^author
+            } = List.first(articles)
+        end
+    end
   end
   

@@ -11,4 +11,15 @@ defmodule Netguru.API.Article do
 
         Repo.insert changeset
     end
+
+    def index_articles(opts \\ []) do
+        preload = Keyword.get(opts, :preload, false)
+
+        articles = Repo.all(Article)
+        if preload do
+            Repo.preload(articles, [:author])
+        else
+            articles
+        end
+    end
 end

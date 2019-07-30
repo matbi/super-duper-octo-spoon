@@ -6,6 +6,12 @@ defmodule NetguruWeb.ArticleController do
 
     action_fallback NetguruWeb.FallbackController
 
+    def index(conn, _) do
+        articles = API.index_articles(preload: true)
+
+        render conn, "index.json", articles: articles
+    end
+
     def delete(conn, %{"id" => id}) do
         user = Guardian.Plug.current_resource(conn)
         article = API.get_article! id
