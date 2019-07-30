@@ -108,6 +108,20 @@ defmodule NetguruWeb.AuthorControllerTest do
 
             assert Map.has_key?(response, "errors")
         end
+
+        test "shouldn't be accessible for another user" do
+            author = %{
+                "age" => 13,
+                "first_name" => "Test",
+                "last_name" => "Test2"
+            }
+
+            {:ok, %Netguru.Schema.Author{} = author} = Netguru.API.Author.create_author(author)
+            conn = login(author.id)
+            conn = put conn, author_path(conn, :update, 1, %{"author" => author})
+
+            assert conn.status == 401
+        end
     end
 end
   

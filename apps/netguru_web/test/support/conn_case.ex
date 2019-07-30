@@ -20,6 +20,7 @@ defmodule NetguruWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import NetguruWeb.Router.Helpers
+      import NetguruWeb.ConnCase, only: [login: 1]
 
       # The default endpoint for testing
       @endpoint NetguruWeb.Endpoint
@@ -34,12 +35,15 @@ defmodule NetguruWeb.ConnCase do
     end
     Netguru.Seeds.main
 
-    {:ok, token, _} = 1
-                        |> Netguru.API.Author.get_author!()
-                        |> NetguruWeb.Guardian.encode_and_sign()
-
-    conn = Phoenix.ConnTest.build_conn() |> Plug.Conn.put_req_header("authorization", "bearer: " <> token)
+    conn = login(1)
     {:ok, conn: conn}
+  end
+
+  def login(user_id) do
+    %Netguru.Schema.Author{} = author = Netguru.API.Author.get_author!(user_id)
+    {:ok, token, _} = NetguruWeb.Guardian.encode_and_sign(author)
+
+    Plug.Conn.put_req_header(Phoenix.ConnTest.build_conn(), "authorization", "bearer: " <> token)
   end
 
 end

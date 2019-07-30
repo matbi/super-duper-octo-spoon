@@ -17,4 +17,11 @@ defmodule NetguruWeb.FallbackController do
     |> put_status(:not_found)
     |> render(NetguruWeb.ErrorView, :"404")
   end
+
+  def call(conn, {:error, :unauthorized}) do
+    conn
+      |> resp(401, "")
+      |> send_resp()
+  end
+
 end
