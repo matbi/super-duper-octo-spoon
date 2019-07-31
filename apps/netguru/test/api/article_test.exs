@@ -7,7 +7,7 @@ defmodule Netguru.API.ArticleTest do
         test "should delete an existing article" do
             assert %Article{id: 1} = API.get_article!(1)
 
-            API.delete_article 1
+            {:ok, %Article{}} = API.delete_article 1
 
             assert_raise Ecto.NoResultsError, fn -> API.get_article!(1) end
         end

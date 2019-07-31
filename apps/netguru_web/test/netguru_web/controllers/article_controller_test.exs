@@ -13,6 +13,12 @@ defmodule NetguruWeb.ArticleControllerTest do
             assert response(conn, 204)
         end
 
+        test "shouldn't be accessible for an unauthenticated user" do
+            conn = build_conn()
+            conn = delete conn, article_path(conn, :delete, 1)
+            assert conn.status == 401
+        end
+
         test "shouldn't be accessible for a user that is not the author" do
             author = %{
                 "age" => 13,
@@ -28,19 +34,19 @@ defmodule NetguruWeb.ArticleControllerTest do
     end
 
     describe "create/2" do
-        test "should create a new article", %{conn: conn} do
-            article = %{
-                "body" => "body",
-                "description" => "foo bar",
-                "title" => "title"
-            }
+        @article %{
+            "body" => "body",
+            "description" => "foo bar",
+            "title" => "title"
+        }
 
-            conn = post conn, article_path(conn, :create, %{"article" => article})
+        test "should create a new article", %{conn: conn} do
+            conn = post conn, article_path(conn, :create, %{"article" => @article})
             response = json_response(conn, 201)
 
-            article
+            @article
                 |> Map.keys()
-                |> Enum.each(&(assert(article[&1] == response[&1], "#{&1} is different, request: #{article[&1]}, response: #{response[&1]}")))
+                |> Enum.each(&(assert(@article[&1] == response[&1], "#{&1} is different, request: #{@article[&1]}, response: #{response[&1]}")))
 
             # shouldn't raise when the article exists
             _article = Netguru.API.Article.get_article!(response["id"])
@@ -57,6 +63,12 @@ defmodule NetguruWeb.ArticleControllerTest do
                 "body" => ["can't be blank"],
                 "title" => ["can't be blank"]
             }} = response
+        end
+
+        test "shouldn't be accessible for an unautenticated user" do
+            conn = build_conn()
+            conn = post conn, article_path(conn, :create, %{"article" => @article})
+            assert conn.status == 401
         end
     end
 

@@ -18,6 +18,13 @@ defmodule NetguruWeb.AuthorControllerTest do
                 "age" => 18
             } == json_response(conn, 200)
         end
+
+        test "shouldn't be accessible without authentication" do
+            conn = build_conn()
+            conn = get conn, author_path(conn, :show, 1)
+
+            assert conn.status == 401
+        end
     end
 
     describe "create/2" do
