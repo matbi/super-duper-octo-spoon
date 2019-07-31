@@ -36,8 +36,8 @@ defmodule Netguru.API.ArticleTest do
         }
 
         test "should create an article when the data is valid" do
-            assert {:ok, %Article{id: id}} = API.create_article(@article)
-            assert %Article{id: ^id} = API.get_article!(id)
+            assert {:ok, %Article{id: id} = article} = API.create_article(@article)
+            assert ^article = API.get_article!(id)
         end
 
         test "should return an error when the data is invalid" do

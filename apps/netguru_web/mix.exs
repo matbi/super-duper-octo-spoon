@@ -47,7 +47,8 @@ defmodule NetguruWeb.Mixfile do
       {:cowboy, "~> 1.0"},
       {:guardian, "~> 1.0"},
       {:json, "~> 1.2"},
-      {:bodyguard, "~> 2.2"}
+      {:bodyguard, "~> 2.2"},
+      {:plug_cowboy, "~> 1.0"}
     ]
   end
 

@@ -25,6 +25,7 @@ defmodule NetguruWeb.ArticleController do
     def create(conn, %{"article" => article}) do
         user = Guardian.Plug.current_resource(conn)
         article = Map.put(article, "author_id", user.id)
+
         with {:ok, %Article{} = article} <- API.create_article(article) do
             conn
               |> put_status(:created)
