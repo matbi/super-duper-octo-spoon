@@ -33,4 +33,19 @@ defmodule Netguru.API.AuthorTest do
             assert {:error, %Ecto.Changeset{valid?: false, errors: errors}} = API.create_author(invalid_author)
         end
     end
+
+    describe "update_author/2" do
+        test "should return an error when the author doesn't exist" do
+            assert {:error, :not_found} = API.update_author(2, %{"age" => 13})
+        end
+
+        test "should return an error when the data is invalid" do
+            assert {:error, %Ecto.Changeset{valid?: false}} = API.update_author(1, %{"age" => 10})
+        end
+
+        test "should update the author when the data is valid" do
+            assert {:ok, %Author{id: 1, age: 100}} = API.update_author(1, %{"age" => 100})
+            assert %Author{id: 1, age: 100} = API.get_author!(1)
+        end
+    end
 end

@@ -10,10 +10,12 @@ defmodule Netguru.API.Author do
             |> Repo.insert
     end
 
-    def update_author(id, %{} = author) do
-        Author
-            |> Repo.get(id)
-            |> Author.changeset(author)
-            |> Repo.update
+    def update_author(id, %{} = updated_author) do
+        case Repo.get(Author, id) do
+            %Author{} = author -> author
+                                    |> Author.changeset(updated_author)
+                                    |> Repo.update()
+            _ -> {:error, :not_found}
+        end
     end
 end
