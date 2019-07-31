@@ -17,7 +17,7 @@ defmodule NetguruWeb.ArticleController do
         article = API.get_article! id
 
         if user.id == article.author_id do
-            with {:ok, %Article{}} <- API.delete_article article do
+            with {:ok, %Article{}} <- API.delete_article id do
                 send_resp(conn, :no_content, "")
             end
         else

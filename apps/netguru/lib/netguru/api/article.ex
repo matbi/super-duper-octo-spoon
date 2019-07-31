@@ -3,7 +3,12 @@ defmodule Netguru.API.Article do
     alias Netguru.Repo
 
     def get_article!(id), do: Repo.get! Article, id
-    def delete_article(%Article{} = article), do: Repo.delete article
+    def delete_article(id) do
+        case Repo.get(Article, id) do
+            %Article{} = article -> Repo.delete(article)
+            _ -> {:error, :not_found}
+        end
+    end
 
     def create_article(%{} = article) do
         article = Map.put(article, "published_date", DateTime.utc_now)
