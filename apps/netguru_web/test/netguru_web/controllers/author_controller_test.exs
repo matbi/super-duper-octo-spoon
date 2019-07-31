@@ -60,7 +60,20 @@ defmodule NetguruWeb.AuthorControllerTest do
             conn = build_conn()
             conn = post conn, author_path(conn, :create, %{"author" => author})
 
-            assert %{"errors" => _} = json_response(conn, 422) 
+            assert %{"errors" => _} = json_response(conn, 422)
+        end
+
+        test "shouldn't create any article when the data is invalid" do
+            articles_length = length(Netguru.API.Article.index_articles())
+
+            author = %{
+                "age" => 1
+            }
+
+            conn = build_conn()
+            _conn = post conn, author_path(conn, :create, %{"author" => author})
+
+            assert length(Netguru.API.Article.index_articles()) == articles_length
         end
     end
 

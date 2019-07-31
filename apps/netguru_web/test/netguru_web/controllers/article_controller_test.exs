@@ -8,9 +8,13 @@ defmodule NetguruWeb.ArticleControllerTest do
             end
         end
 
-        test "should return 204 when the article was found", %{conn: conn} do
+        test "should return 204 when the article was found and deleted", %{conn: conn} do
             conn = delete conn, article_path(conn, :delete, 1)
             assert response(conn, 204)
+
+            assert_raise Ecto.NoResultsError, fn ->
+                Netguru.API.Article.get_article!(1)
+            end
         end
 
         test "shouldn't be accessible for an unauthenticated user" do
@@ -30,6 +34,9 @@ defmodule NetguruWeb.ArticleControllerTest do
             conn = delete conn, article_path(conn, :delete, 1)
 
             assert conn.status == 401
+
+            # shouldn't raise
+            _article = Netguru.API.Article.get_article!(1)
         end
     end
 
