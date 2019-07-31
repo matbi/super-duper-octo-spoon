@@ -16,13 +16,10 @@ defmodule NetguruWeb.ArticleController do
         user = Guardian.Plug.current_resource(conn)
         article = API.get_article! id
 
-        if user.id == article.author_id do
-            with {:ok, %Article{}} <- API.delete_article id do
+        with :ok <- Bodyguard.permit(NetguruWeb.Policies.Article, :delete_article, user, article),
+             {:ok, %Article{}} <- API.delete_article id do
                 send_resp(conn, :no_content, "")
-            end
-        else
-            {:error, :unauthorized}
-        end
+        end 
     end
 
     def create(conn, %{"article" => article}) do

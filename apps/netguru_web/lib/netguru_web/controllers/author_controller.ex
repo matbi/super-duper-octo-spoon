@@ -25,12 +25,9 @@ defmodule NetguruWeb.AuthorController do
         author = API.get_author! id
         user = Guardian.Plug.current_resource(conn)
 
-        if user.id == author.id do
-            with {:ok, %Author{} = author} <- API.update_author(id, updated_author) do
+        with :ok <- Bodyguard.permit(NetguruWeb.Policies.Author, :update_author, user, author),
+             {:ok, %Author{} = author} <- API.update_author(id, updated_author) do
                 render conn, "show.json", author: author
-            end
-        else
-            {:error, :unauthorized}
         end
     end
 end
