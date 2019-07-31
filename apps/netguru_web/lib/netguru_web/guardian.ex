@@ -1,4 +1,5 @@
 defmodule NetguruWeb.Guardian do
+    @moduledoc false
     use Guardian, otp_app: :netguru_web
     
     def subject_for_token(user, _claims) do

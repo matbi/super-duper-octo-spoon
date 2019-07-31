@@ -1,6 +1,10 @@
 defmodule NetguruWeb.Guardian.ErrorHandler do
     import Plug.Conn
 
+    @moduledoc """
+      Handles the guardian errors
+    """
+
     @behaviour Guardian.Plug.ErrorHandler
 
     @impl Guardian.Plug.ErrorHandler

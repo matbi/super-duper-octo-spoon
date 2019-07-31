@@ -5,6 +5,7 @@ defmodule Netguru.Schema.Author do
 
   @all_fields [:first_name, :last_name, :age]
   @required_fields @all_fields
+  @moduledoc false
 
   schema "authors" do
     field :age, :integer

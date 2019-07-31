@@ -1,4 +1,5 @@
 defmodule Netguru.API.Article do
+    @moduledoc false
     alias Netguru.Schema.Article
     alias Netguru.Repo
 

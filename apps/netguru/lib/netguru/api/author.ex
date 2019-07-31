@@ -1,4 +1,5 @@
 defmodule Netguru.API.Author do
+    @moduledoc false
     alias Netguru.Schema.Author
     alias Netguru.Repo
 

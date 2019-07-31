@@ -30,7 +30,7 @@ config :netguru_web, NetguruWeb.Guardian,
   allowed_algos: ["HS512"], # optional
   #verify_module: Guardian.JWT,  # optional
   issuer: "NetguruWeb",
-  ttl: { 30, :days },
+  ttl: {30, :days},
   allowed_drift: 2000,
   verify_issuer: true, # optional
   secret_key: "ednkXywWll1d2svDEpbA39R5kfkc9l96j0+u7A8MgKM+pbwbeDsuYB8MP2WUW1hf", # Insert previously generated secret key!

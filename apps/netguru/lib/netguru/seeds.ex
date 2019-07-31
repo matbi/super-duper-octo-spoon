@@ -1,4 +1,5 @@
 defmodule Netguru.Seeds do
+    @moduledoc false
     def main do
         alias Netguru.Repo
         alias Netguru.Schema.{Article, Author}

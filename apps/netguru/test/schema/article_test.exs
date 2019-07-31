@@ -12,40 +12,40 @@ defmodule Netguru.Schema.ArticleTest do
     end
 
     # To ensure that no tests pass/fail because of invalid "basic" article data
-    test "valid_article is valid", %{ valid_article: article } do
+    test "valid_article is valid", %{valid_article: article} do
         changeset = changeset_merge(article, %{})
         assert changeset.valid?
     end
 
-    test "body is required", %{ valid_article: article } do
+    test "body is required", %{valid_article: article} do
         changeset = changeset_merge(article, %{body: ""})
         
         refute changeset.valid?
         assert Keyword.has_key? changeset.errors, :body
     end
 
-    test "published_date is required", %{ valid_article: article } do
+    test "published_date is required", %{valid_article: article} do
         changeset = changeset_merge(article, %{published_date: ""})
 
         refute changeset.valid?
         assert Keyword.has_key? changeset.errors, :published_date
     end
 
-    test "description isn't required", %{ valid_article: article } do
+    test "description isn't required", %{valid_article: article} do
         changeset = changeset_merge(article, %{description: ""})
 
         assert changeset.valid?
     end
 
     describe "title" do
-        test "is required", %{ valid_article: article } do
+        test "is required", %{valid_article: article} do
             changeset = changeset_merge(article, %{title: ""})
     
             refute changeset.valid?
             assert Keyword.has_key? changeset.errors, :title
         end
 
-        test "length cannot exceed 150 characters", %{ valid_article: article } do
+        test "length cannot exceed 150 characters", %{valid_article: article} do
             length = 150 + Enum.random(1..100)
             title = generate_title(length)
 
@@ -55,7 +55,7 @@ defmodule Netguru.Schema.ArticleTest do
             assert Keyword.has_key? changeset.errors, :title
         end
 
-        test "is valid when the length doesn't exceed 150 characters", %{ valid_article: article } do
+        test "is valid when the length doesn't exceed 150 characters", %{valid_article: article} do
             length = Enum.random(1..149)
             title = generate_title(length)
 
@@ -72,8 +72,8 @@ defmodule Netguru.Schema.ArticleTest do
         end
     end
 
-    test "author_id is required", %{ valid_article: article } do
-        changeset = changeset_merge(article, %{ author_id: "" })
+    test "author_id is required", %{valid_article: article} do
+        changeset = changeset_merge(article, %{author_id: ""})
 
         refute changeset.valid?
         assert Keyword.has_key? changeset.errors, :author_id
